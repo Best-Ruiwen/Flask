@@ -5,8 +5,8 @@ Required additional python packages:
     3. redis.
 
 Usage:
-    A. On Windows machine:python main.py and open "http://127.0.0.1/" in browser
 
+    A. On Windows machine:python main.py and open "http://127.0.0.1/" in browser
     B. On Linux machine(Ubuntu 16.04):
         1. Enter the 'configure' folder
         2. Run 'sudo chmox 777 configure.sh' in terminal
@@ -14,7 +14,6 @@ Usage:
         4. Run nginx
         5. Run 'uwsgi uwsgi.ini' in terminal
         6. Open "http://127.0.0.1/" in browser
-
     C. Test account:2016212707
             password:riven
 
