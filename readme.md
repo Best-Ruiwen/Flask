@@ -11,7 +11,7 @@ Usage:
         1. Enter the 'configure' folder.
         2. Run 'sudo chmox 777 configure.sh' in terminal.
         3. Run './configure.sh' in terminal.
-        4. Run 'cd ..' and 'nginx'.
+        4. Run 'nginx' in terminal.
         5. Run 'uwsgi uwsgi.ini' in terminal.
         6. Open "http://127.0.0.1/" in browser.
     C. Test account:2016212707
