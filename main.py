@@ -201,8 +201,13 @@ def verify():
     email = request.args.get("email")
     email = rsa.decrypt(email).decode()
 
+    status = request.args.get("status")  #register，或者reset
+
     # print(email, username, password)
-    if datahandler.isregister(email):
+    if datahandler.isregister(email) and status == 'register': #邮箱已经注册，但用户在注册该邮箱
+        return json.dumps(-1)
+
+    elif (not datahandler.isregister(email)) and status == 'reset':  # 邮箱未注册，但用户在重置密码
         return json.dumps(-1)
     else:
         verify_code = random.randint(100000, 999999)
@@ -216,6 +221,31 @@ def verify():
 @app.route('/register/')
 def register():
     return render_template("register.html", public_key=rsa.get_public_key())
+
+
+# 重置密码
+@app.route('/resetpasswd/')
+def reset():
+    return render_template("resetpasswd.html", public_key=rsa.get_public_key())
+
+
+# 重置密码提交数据连接
+@app.route('/resetpasswd/submit/')
+def reset_verify():
+    email = request.args.get("email")
+    email = rsa.decrypt(email).decode()
+    verify_code = request.args.get("verify_code")
+    print(email, verify_code)
+    if cache._get(email) == verify_code:    # 验证通过，将数据写入数据库
+        email = request.args.get("email")
+        emial = rsa.decrypt(email).decode()
+
+        password = request.args.get("password")
+        password = rsa.decrypt(password).decode()
+
+        datahandler.resetpasswd(email, password)
+        return json.dumps(0)
+    return json.dumps(-1)
 
 
 # 设备获取公钥链接
@@ -252,4 +282,4 @@ def upload(device):
 
 
 if __name__ == '__main__':
-    app.run(port=80, host='127.0.0.1', debug=True)
+    app.run(port=80, host='0.0.0.0')

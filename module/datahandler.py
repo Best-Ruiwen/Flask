@@ -74,7 +74,7 @@ def get_table(username):
     return ret
 
 
-def login(username, password):  # 从数据库中读取username和password并验证，如果正确则返回1，否则返回其他值
+def login(username, password):  # 从数据库中读取username和password并验证
     cx = sqlite3.connect('data.db')
     cu = cx.cursor()
 
@@ -241,6 +241,22 @@ def isregister_device(device):
         cu.close()
         cx.close()
         return False  # 未注册的设备
+
+
+# 重置密码时，写入密码
+def resetpasswd(email, password):
+    cx = sqlite3.connect('data.db')
+    cu = cx.cursor()
+    try:
+        cu.execute("update userinfo set password=\"{}\" where email=\"{}\"".format(password, email))
+        cx.commit()
+        cu.close()
+        cx.close()
+        return True
+    except:
+        cu.close()
+        cx.close()
+        return False
 
 
 if __name__ == '__main__':

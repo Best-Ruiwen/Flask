@@ -1,23 +1,37 @@
 import smtplib
+import email
 from email.mime.text import MIMEText
-from email.header import Header
+from email.mime.multipart import MIMEMultipart
 
 
 def sendmail(addr, code):
-    sender = 'riven@cloud.com'
-    receivers = [addr]  # 接收邮件地址
-    print(code)
+    EMAIL_FROM = 'master@rivencloud.top'
+    EMAIL_HOST_PASSWORD = '304821CQuptriven'
+    EMAIL_HOST, EMAIL_PORT = 'smtpdm.aliyun.com', 80
+    replyto = EMAIL_FROM
 
-    message = MIMEText('您的验证码是:{}'.format(str(code))+ '\n' + '10分钟内有效', 'plain')
-    message['From'] = Header("rivencloud")  # 发送者
-    message['To'] = Header("", '')  # 接收者
-
-    subject = 'RivenCloud验证码'
-    message['Subject'] = Header(subject, 'utf-8')
+    content = '您的验证码是：{}'.format(str(code)) + '\n' + '10分钟内有效'
+    msg = MIMEMultipart('alternative')
+    msg['Subject'] = '[请勿回复]RivenCloud 验证码'
+    msg['From'] = '%s <%s>' % ("admin", EMAIL_FROM)
+    msg['To'] = '%s <%s>' % ("client", addr)
+ 
+    msg['Reply-to'] = replyto
+    msg['Message-id'] = email.utils.make_msgid()
+    msg['Date'] = email.utils.formatdate()
+    textplain = MIMEText('{}'.format(content), _subtype='plain', _charset='UTF-8')
+    msg.attach(textplain)
 
     try:
-        smtpObj = smtplib.SMTP('localhost')
-        smtpObj.sendmail(sender, receivers, message.as_string())
+        client = smtplib.SMTP()
+        client.connect(EMAIL_HOST, EMAIL_PORT)
+        # 开启DEBUG模式
+        client.set_debuglevel(0)
+        client.login(EMAIL_FROM, EMAIL_HOST_PASSWORD)
+        client.sendmail(EMAIL_FROM, [addr], msg.as_string())
+        client.quit()
         return True
-    except smtplib.SMTPException:
+
+    except:
         return False
+

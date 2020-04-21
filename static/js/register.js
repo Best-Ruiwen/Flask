@@ -48,6 +48,7 @@ $(document).ready(function(){
     })
 
     $("#sub_verify").click(function(){
+        var wait = 60;
         var unencrypted_email = $('#email').val();
         var reg = new RegExp(/^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/)
         if(!reg.test(unencrypted_email)){
@@ -55,8 +56,25 @@ $(document).ready(function(){
             return;
         }
 
+        time(this);
+        function time(o) {
+            if (wait == 0) {
+                o.removeAttribute("disabled");
+                o.innerHTML = "获取验证码";
+                wait = 60;
+            } 
+            else {
+                   o.setAttribute("disabled", true);
+                       o.innerHTML = wait;
+                     wait--;
+                     setTimeout(function() {
+                         time(o)
+                    }, 1000)
+                }
+        }
+
         var encrypted_email = encrypt.encrypt(unencrypted_email);
-        var send = {"email":encrypted_email}
+        var send = {"email":encrypted_email, "status":"register"}
         $.ajax({
             url:"/register/verify/",
             data:send,
