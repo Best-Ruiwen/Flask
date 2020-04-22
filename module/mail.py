@@ -6,13 +6,13 @@ from email.mime.multipart import MIMEMultipart
 
 def sendmail(addr, code):
     EMAIL_FROM = 'master@rivencloud.top'
-    EMAIL_HOST_PASSWORD = '304821CQuptriven'
-    EMAIL_HOST, EMAIL_PORT = 'smtpdm.aliyun.com', 80
+    EMAIL_HOST_PASSWORD = 'pass'   # 此处填写你的阿里云或者腾讯云邮箱密码
+    EMAIL_HOST, EMAIL_PORT = 'smtpdm.aliyun.com', 80     # 根据实际情况，写你的服务器邮箱地址
     replyto = EMAIL_FROM
 
     content = '您的验证码是：{}'.format(str(code)) + '\n' + '10分钟内有效'
     msg = MIMEMultipart('alternative')
-    msg['Subject'] = '[请勿回复]RivenCloud 验证码'
+    msg['Subject'] = '[请勿回复]RivenCloud 验证码'     
     msg['From'] = '%s <%s>' % ("admin", EMAIL_FROM)
     msg['To'] = '%s <%s>' % ("client", addr)
  
