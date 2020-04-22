@@ -35,6 +35,7 @@ $("#logout").click(function(){
 });
 $(document).ready(function(){
     $("#homepage").attr("href", "http://" + window.location.host + "/user/" + $("#username").text())
+    $("#download").attr("href", "http://" + window.location.host + "/download/" + $("#username").text())
     if(window.screen.width<400){
         $('#line').css('height', '300px');
         $('#pie').css('height', '300px');
