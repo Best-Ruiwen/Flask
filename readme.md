@@ -8,12 +8,11 @@ Usage:
 
     A. On Windows machine:python main.py and open "http://127.0.0.1/" in browser
     B. On Linux machine(Ubuntu 16.04):
-        1. Enter the 'configure' folder.
-        2. Run 'sudo chmox 777 configure.sh' in terminal.
-        3. Run './configure.sh' in terminal.
-        4. Run 'nginx' in terminal.
-        5. Run 'uwsgi uwsgi.ini' in terminal.
-        6. Open "http://127.0.0.1/" in browser.
+        1. Run 'sudo chmox 777 configure.sh' in terminal.
+        2. Run './configure.sh' in terminal.
+        3. Run 'nginx' in terminal.
+        4. Run 'uwsgi uwsgi.ini' in terminal.
+        5. Open "http://127.0.0.1/" in browser.
     C. Test account:2016212707
             password:riven
 
