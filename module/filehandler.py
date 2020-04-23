@@ -16,7 +16,7 @@ def get_file(username):
     maps = {}
     for root, dirs, files in os.walk(download):
         for item in files:
-            maps[item] = round(os.path.getsize(os.path.join(root, item))/1024, 2)
+            maps[item] = round(os.path.getsize(os.path.join(root, item))/1024, 2)  # 取小数点后两位
     return maps
 
 

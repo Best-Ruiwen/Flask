@@ -12,6 +12,7 @@ sys.path.append('./module/')
 
 # 自写模块
 import datahandler
+import filehandler
 import rsa
 import mail
 from cache import Cache
@@ -28,6 +29,23 @@ def islogin(username):
     if session.get(username) == username:
         return True
     return False
+
+
+# 文件下载链接
+@app.route('/download/<username>/')
+def filelist(username):
+    if islogin(username):
+        filehandler.db2csv(username)
+        maps = filehandler.get_file(username)
+        return render_template('download.html', names=maps, id=username)
+    return json.dumps(-1)
+
+
+@app.route('/download/<username>/<filename>/')
+def download(username, filename):
+    if islogin(username):
+        return send_from_directory(os.path.join(app.root_path,'download/'+username), filename, as_attachment=True)
+    return json.dumps(-1)
 
 
 @app.route('/')
@@ -189,6 +207,7 @@ def register_submit():
         
         if datahandler.register(username, password, email):
             session[username] = username   # 登录
+            filehandler.makedir(username)  # 创建文件夹
             return json.dumps("/user/{}/".format(username))
         return json.dumps(-1)     # 用户名已经存在
 
@@ -252,6 +271,7 @@ def reset_verify():
 @app.route('/publickey/')
 def send_key():
     return json.dumps(rsa._get_public_key())
+
 
 # 数据上传链接
 @app.route('/upload/<device>/', methods=["POST", "GET"])
