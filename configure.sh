@@ -10,6 +10,7 @@ sudo apt -y install nginx
 
 
 #Redis server configuration
+sudo apt -y install redis-server
 
 
 #Python configuration
