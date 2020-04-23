@@ -34,10 +34,10 @@ $(document).ready(function(){
             dataType:"json",
             success:function(data){
                 if(data == -1){
-                    alert("验证码错误！")
+                    alert("用户名已被使用！")
                 }
                 else if(data == 0){
-                    alert("注册失败！")
+                    alert("验证码错误！")
                 }
                 else{
                     data = 'http://' + window.location.host + data;

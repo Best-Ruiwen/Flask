@@ -216,16 +216,18 @@ def register(username, password, email):
     cx = sqlite3.connect('data.db')
     cu = cx.cursor()
     try:
+        cu.execute("select id from userinfo where username=\"{}\"".format(username))
+        userID=cu.fetchall()[0][0]
+        cu.close()
+        cx.close()
+        return False  # 用户名已经存在
+
+    except:
         cu.execute("insert into userinfo values(null, \"{}\", \"{}\", \"{}\")".format(username, password, email))
         cx.commit()
         cu.close()
         cx.close()
-        return True
-    except:
-        cu.close()
-        cx.close()
-        return False
-
+        return True   # 注册成功
 
 # 判断设备是否注册
 def isregister_device(device):

@@ -190,9 +190,9 @@ def register_submit():
         if datahandler.register(username, password, email):
             session[username] = username   # 登录
             return json.dumps("/user/{}/".format(username))
-        return json.dumps(-1)
+        return json.dumps(-1)     # 用户名已经存在
 
-    return json.dumps(0)
+    return json.dumps(0)    # 验证码错误
 
 
 # 获取验证码链接
