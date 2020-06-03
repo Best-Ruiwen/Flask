@@ -3,12 +3,15 @@ Required additional python packages:
     1. flask;
     2. pycryptodome;
     3. redis.
+Required other software:
+    1. nginx;
+    2. redis server.
 
 Usage:
 
     A. On Windows machine:python main.py and open "http://127.0.0.1/" in browser
     B. On Linux machine(Ubuntu 16.04):
-        1. Run 'sudo chmox 777 configure.sh' in terminal.
+        1. Run 'sudo chmod 777 configure.sh' in terminal.
         2. Move the file under the folder 'keys' to the root of the projects
         3. Run './configure.sh' in terminal.
         4. Run 'nginx' in terminal.
