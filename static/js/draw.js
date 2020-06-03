@@ -1,7 +1,6 @@
 function drawLineChart(data){
     var temp=[];
     var len = data.length;
-    console.log(data)
     for(var i=0;i<len;i++){
         temp.push([i, data[i]]);
     }
@@ -81,7 +80,9 @@ function drawTable(data, time){
     }
     table = table + "</tbody></table>";
     $("#sheet").html(table); // 绘制表格完成
-
+    var he = $("#sheet").height() + 50 + "px"
+    $("#sheet").css("height",he)
+    $("#sheet").html(table); // 绘制表格完成
 }   //表格
 
 function selectNode(node){
@@ -108,9 +109,12 @@ function selectNode(node){
 }
 
 function selectNode_mobile(node){
+    console.log($("#t_mobile1").children("label").text())
     for(var i=1;i<6;i++){
         if($("#"+"t_mobile"+String(i)).is(":checked")){
-            $('#nodeName').text(node);
+            $('#b2').text(node);
+            
+            // $("#b3").text($("#"+"t_mobile"+String(i)).text())
             $.ajax({
             url:'/'+ $("#username").text() +'/node/',
             data:{'node':node, "time":i},

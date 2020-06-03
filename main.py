@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 
 # 系统模块
-from flask import Flask, render_template, request, session, url_for, redirect
+from flask import Flask, render_template, url_for, redirect 
+from flask import request, session, send_from_directory
 import random
 import os
 import time
@@ -89,7 +90,8 @@ def login_submit():
     elif result_login == -1:  # 未注册的账号
         return json.dumps(-2)  
 
-    else:
+    else:  # 返回的是用户名
+        session[result_login] = result_login
         return json.dumps(url_for('success', username=result_login))
         # return json.dumps("http://localhost/user/{}/".format(result_login))
 
@@ -118,8 +120,9 @@ def logout():
 # 图表(数据)界面
 @app.route('/user/<username>/chart/')
 def chart(username):
+    nodes = datahandler.get_table(username)
     if islogin(username):
-        return render_template("chart_panel.html", nodes=datahandler.get_table(username), id=username)
+        return render_template("chart_panel.html", nodes=nodes, id=username)
     return json.dumps(-1)
 
     
@@ -146,8 +149,9 @@ def node_select(username):
 @app.route('/user/<username>/control/')
 def control(username):
     # print(datahandler.get_table(username))
+    tables = datahandler.get_table(username)
     if islogin(username):
-        return render_template("control_panel.html", tables=datahandler.get_table(username), id=username)
+        return render_template("control_panel.html", tables=tables, id=username)
     return json.dumps(-1)
 
 
@@ -157,10 +161,15 @@ def send_order(username):
     if islogin(username):
         node = request.args.get("node")
         order = request.args.get("order")  # 命令代码：1.启动   0.关机  -1.立即上传数据
-        remote = request.remote_addr 
+        remote, status= datahandler.getipBydeviceName(node)
+        print("节点:{}, 命令:{}".format(node, order))
         addr = (remote, 10086)
         try:
-            s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            if status == "4":
+                s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            else:
+                s = socket.socket(socket.AF_INET6, socket.SOCK_DGRAM)
+                
             msg = (node + ',' + str(order))
             s.sendto(msg.encode('utf-8'), addr)
             return json.dumps("1")
@@ -174,8 +183,10 @@ def send_order(username):
 def add_device(username):
     if islogin(username):
         node = request.args.get("node")
+        ip = request.args.get("ip")
+        status = request.args.get("status")
         # print(node)
-        datahandler.add_device(node, username)
+        datahandler.add_device(node, username, ip, status)
         return json.dumps("success")
         # return json.dumps(datahandler.add_device(username, node))
     return json.dumps(-1)
@@ -191,27 +202,35 @@ def delete_device(username):
     return json.dumps(-1)
 
 
+# 注册页
+@app.route('/register/')
+def register():
+    return render_template("register.html", public_key=rsa.get_public_key())
+
+
 # 注册，提交用户名和密码
 @app.route("/register/submit/", methods=["POST", "GET"])
 def register_submit():
     email = request.args.get("email")
     email = rsa.decrypt(email).decode()
     verify_code = request.args.get("verify_code")
+    print("收到的验证码:{}".format(verify_code))
 
     if cache._get(email) == verify_code:    # 验证通过，将数据写入数据库
+        print("验证通过!")
         username = request.args.get("username")
         username = rsa.decrypt(username).decode()
 
         password = request.args.get("password")
         password = rsa.decrypt(password).decode()
         
-        if datahandler.register(username, password, email):
-            session[username] = username   # 登录
+        if datahandler.register(username, password, email):  
+            session[username] = username   # 如果注册成功，则自动登录
             filehandler.makedir(username)  # 创建文件夹
             return json.dumps("/user/{}/".format(username))
-        return json.dumps(-1)     # 用户名已经存在
+        return json.dumps(-1)
 
-    return json.dumps(0)    # 验证码错误
+    return json.dumps(0)
 
 
 # 获取验证码链接
@@ -222,24 +241,18 @@ def verify():
 
     status = request.args.get("status")  #register，或者reset
 
-    # print(email, username, password)
     if datahandler.isregister(email) and status == 'register': #邮箱已经注册，但用户在注册该邮箱
         return json.dumps(-1)
 
     elif (not datahandler.isregister(email)) and status == 'reset':  # 邮箱未注册，但用户在重置密码
         return json.dumps(-1)
+
     else:
         verify_code = random.randint(100000, 999999)
+        print("生成的验证码:{}".format(verify_code))
         cache._set(email, verify_code)
         mail.sendmail(email, verify_code)
-    # print(cache._get(email))
     return json.dumps(0)
-
-
-# 注册，提交用户名和密码
-@app.route('/register/')
-def register():
-    return render_template("register.html", public_key=rsa.get_public_key())
 
 
 # 重置密码
@@ -254,16 +267,25 @@ def reset_verify():
     email = request.args.get("email")
     email = rsa.decrypt(email).decode()
     verify_code = request.args.get("verify_code")
-    print(email, verify_code)
     if cache._get(email) == verify_code:    # 验证通过，将数据写入数据库
-        email = request.args.get("email")
-        emial = rsa.decrypt(email).decode()
-
         password = request.args.get("password")
         password = rsa.decrypt(password).decode()
 
-        datahandler.resetpasswd(email, password)
-        return json.dumps(0)
+        if datahandler.resetpasswd(email, password):
+            return json.dumps(0)
+    return json.dumps(-1)
+
+
+@app.route('/user/<username>/rectify/')
+def rectify(username):
+    if islogin(username):
+        node = request.args.get("node")
+        ip = request.args.get("ip")
+        status = request.args.get("status")
+        if datahandler.rectify(node, ip, status):
+            return json.dumps("修改成功！")
+        else:
+            return json.dumps("修改失败！")
     return json.dumps(-1)
 
 
@@ -285,8 +307,7 @@ def upload(device):
         passwd = rsa.decrypt_upload_data(passwd).decode()
     except:
         return json.dumps('Type error')
-
-
+        
     if datahandler.login(username, passwd) == 1:
         # 判断设备是否注册
         if datahandler.isregister_device(device): # 已经注册过的设备
@@ -302,4 +323,4 @@ def upload(device):
 
 
 if __name__ == '__main__':
-    app.run(port=80, host='0.0.0.0')
+    app.run(port=80, host='127.0.0.1', debug=True)

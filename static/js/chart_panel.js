@@ -14,9 +14,6 @@ function setActive(id){
     }
 }
 function changeURL(id){
-//    if (id == 1) window.location.href="http://localhost/user/" + $("#username").text();
-//    if (id == 2) window.location.href="http://localhost/user/" + $("#username").text() + "/chart/";
-//    if (id == 3) window.location.href="http://localhost/user/" + $("#username").text() + "/control/";
     if (id == 1) window.location.href="http://" + window.location.host + "/user/" + $("#username").text();
     if (id == 2) window.location.href="http://" + window.location.host + "/user/" + $("#username").text() + "/chart/";
     if (id == 3) window.location.href="http://" + window.location.host + "/user/" + $("#username").text() + "/control/";

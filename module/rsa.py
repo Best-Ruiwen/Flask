@@ -21,7 +21,7 @@ def decrypt(en_data, secret_code="penghaidong"):
     # 读取密钥
     data = parse.unquote(en_data)
     data = base64.b64decode(data)
-    private_key = RSA.import_key(open("./keys/private_key.bin").read(), passphrase=secret_code)
+    private_key = RSA.import_key(open("private_key.bin").read(), passphrase=secret_code)
     cipher_rsa = PKCS1_v1_5.new(private_key)
     data = cipher_rsa.decrypt(data, None)   # 解密
     return data
@@ -29,29 +29,28 @@ def decrypt(en_data, secret_code="penghaidong"):
 # 界面节点上传的数据
 def decrypt_upload_data(en_data, secret_code="penghaidong"):
     data = base64.b64decode(en_data)
-    private_key = RSA.import_key(open("./keys/private_key.bin").read(), passphrase=secret_code)
+    private_key = RSA.import_key(open("private_key.bin").read(), passphrase=secret_code)
     cipher_rsa = PKCS1_v1_5.new(private_key)
     data = cipher_rsa.decrypt(data, None)   # 解密
     return data
 
 # 加密
 def encrypt(data):
-    pub = RSA.import_key(open("./keys/public_key.pem").read())
+    pub = RSA.import_key(open("public_key.pem").read())
     cipher_rsa = PKCS1_v1_5.new(pub)
     data = base64.b64encode(cipher_rsa.encrypt(data))
     return data
 
 def get_public_key():
-    return RSA.import_key(open("./keys/public_key.pem").read()).export_key().decode().replace("\n", "")
+    return RSA.import_key(open("public_key.pem").read()).export_key().decode().replace("\n", "")
 
 
 def get_priv_key():
-    return RSA.import_key(open("./keys/private_key.bin").read(), passphrase="123456").export_key().decode()
+    return RSA.import_key(open("private_key.bin").read(), passphrase="123456").export_key().decode()
 
 
 def _get_public_key():
-    # print(RSA.import_key(open("./keys/public_key.pem").read()).export_key())
-    return RSA.import_key(open("./keys/public_key.pem").read()).export_key().decode()
+    return RSA.import_key(open("public_key.pem").read()).export_key().decode()
 
 
 if __name__ == '__main__':

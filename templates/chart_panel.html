@@ -104,9 +104,13 @@
                                     节点选择
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                    {% for node in nodes %}
-                                    <button class="dropdown-item" type="button" onclick="selectNode('{{node}}')">{{node}}</button>
-                                    {% endfor %}
+                                    {% if nodes %}
+                                        {% for node in nodes %}
+                                            <button class="dropdown-item" type="button" onclick="selectNode('{{node}}')">{{node}}</button>
+                                        {% endfor %}
+                                    {% else %}
+                                            <button class="dropdown-item" type="button">没有数据</button>
+                                    {% endif %}
                                 </div>
                             </div>
                         </li>
@@ -188,7 +192,7 @@
                     <h1 class="h2 col-sm-4 col-md-4 col-lg-4">数据</h1>
                 </div>
             </div>
-            <div  id="sheet" style="height: 500px;"> </div>
+            <div  id="sheet"> </div>
         </main>
     </div>
 
@@ -200,9 +204,13 @@
                         节点选择
                     </button>
                     <div class="dropdown-menu" aria-labelledby="b2">
+                    {% if nodes %}
                         {% for node in nodes %}
                         <button class="dropdown-item" type="button" onclick="selectNode_mobile('{{node}}')">{{node}}</button>
                         {% endfor %}
+                    {% else %}
+                        <button class="dropdown-item" type="button">没有节点</button>
+                    {% endif %}
                     </div>
                 </div>
 

@@ -37,7 +37,7 @@ def write_data(node, time_data, data):
     cu = cx.cursor()
 
     # 业务代码
-    cu.execute('insert into '+node+' values({},{})'.format(time_data, data))
+    cu.execute('insert into {} values({},{})'.format(node,time_data, data))
     # 业务代码
 
     cx.commit()
@@ -141,7 +141,7 @@ def pie_handler(data):
     return pie
 
 
-def add_device(table, username):
+def add_device(table, username, ip, status):
     tables = get_table(username)
     if table in tables:
         return '您已经添加过该设备！'   # 该用户名下已经添加了该设备
@@ -160,14 +160,16 @@ def add_device(table, username):
         return '设备名已经存在！'
 
     cu.execute("create table {}(time float not null,"
-               "data float, not null)".format(table))
-    cu.execute("insert into deviceinfo values(null,{})".format(table))
+               "data float, not null)".format(table))  # 创建表
+    cu.execute("insert into deviceinfo values(null,{}, {})".format(table, status))  # 设备信息表
 
     cu.execute("select id from userinfo where username=\"{}\"".format(username))
     userID=cu.fetchall()[0][0]
     cu.execute("select id from deviceinfo where devicename=\"{}\"".format(table))
     deviceID=cu.fetchall()[0][0]
-    cu.execute("insert into user_device values({}, {})".format(userID, deviceID))
+    cu.execute("insert into user_device values({}, {})".format(userID, deviceID))  # 写入映射表
+
+
 
     cx.commit()
     cu.close()
@@ -195,6 +197,19 @@ def delete_device(username, device):
     cx.close()
 
 
+# 根据设备名获取ip
+def getipBydeviceName(device):
+    cx = sqlite3.connect('data.db')
+    cu = cx.cursor()
+    cu.execute("select ip from deviceinfo where devicename=\"{}\"".format(device))
+    ip = cu.fetchall()[0][0]
+    cu.execute("select status from deviceinfo where devicename=\"{}\"".format(device))
+    status = cu.fetchall()[0][0]
+    cu.close()
+    cx.close()
+    return ip, status
+
+
 # 判断是否已经注册
 def isregister(email):
     cx = sqlite3.connect('data.db')
@@ -216,18 +231,16 @@ def register(username, password, email):
     cx = sqlite3.connect('data.db')
     cu = cx.cursor()
     try:
-        cu.execute("select id from userinfo where username=\"{}\"".format(username))
-        userID=cu.fetchall()[0][0]
-        cu.close()
-        cx.close()
-        return False  # 用户名已经存在
-
-    except:
         cu.execute("insert into userinfo values(null, \"{}\", \"{}\", \"{}\")".format(username, password, email))
         cx.commit()
         cu.close()
         cx.close()
-        return True   # 注册成功
+        return True
+    except:
+        cu.close()
+        cx.close()
+        return False
+
 
 # 判断设备是否注册
 def isregister_device(device):
@@ -251,6 +264,22 @@ def resetpasswd(email, password):
     cu = cx.cursor()
     try:
         cu.execute("update userinfo set password=\"{}\" where email=\"{}\"".format(password, email))
+        cx.commit()
+        cu.close()
+        cx.close()
+        return True
+    except:
+        cu.close()
+        cx.close()
+        return False
+
+
+# 修改设备ip
+def rectify(node, ip, status):
+    cx = sqlite3.connect('data.db')
+    cu = cx.cursor()
+    try:
+        cu.execute("update deviceinfo set ip=\"{}\", status=\"{}\" where devicename=\"{}\"".format(ip, status, node))
         cx.commit()
         cu.close()
         cx.close()

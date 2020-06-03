@@ -7,9 +7,9 @@ class Cache:
         decode_responses=True)
 
     # 设置缓存
-    def _set(self, key, value):
+    def _set(self, key, value, ex=600):
         try:
-            self.r.set(key, value, ex=600)
+            self.r.set(key, value, ex=ex)
             return True
         except:
             raise("Set cache error")
