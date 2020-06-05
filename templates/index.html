@@ -4,19 +4,10 @@
    <meta charset="utf-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-   <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
    <title>Riven Cloud</title>
    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
    <link rel="shortcut icon" href=" {{ url_for('static', filename='images/title.ico') }}">
-
-
-   <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
-   <!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
-   <!--[if lt IE 9]>
-      <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
-   <![endif]-->
    <style>
       .beian {
          position: relative;
@@ -26,11 +17,8 @@
          text-align: center;
          }
    </style>
-
-
 </head>
 <body style="background-color: bisque;">
-   <!-- 导航 -->
    <div class="container-fluid" style="height: 80px;">
       <nav class="navbar navbar-dark navbar-expand-lg fixed-top bg-dark">
          <a class="navbar-brand" href="#">
@@ -45,7 +33,6 @@
                  aria-expanded="false" 
                  aria-label="Toggle navigation"
                  style="z-index: 999;" >
-
          <span class="navbar-toggler-icon" style="z-index: 999;"></span>
          </button>
          <div class="collapse navbar-collapse" id="navbarNavAltMarkup" style="z-index: 999;">
@@ -73,8 +60,6 @@
          </div>
       </nav>
    </div>
-
-   <!-- 轮播 -->
    <div class="container-fluid" style="z-index: 1;">
       <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="left: auto;right: 0;">
          <ol class="carousel-indicators">
@@ -92,7 +77,6 @@
                    </div>
                </a>
             </div>
-
             <div class="carousel-item">
                <a id="login_1" href="#">
                   <img src="{{ url_for('static', filename='images/datavisiable.png') }}" class="d-block w-100" alt="...">
@@ -102,7 +86,6 @@
                    </div>
                </a>
             </div>
-            
             <div class="carousel-item">
                <a id="login_2" href="#">
                   <img src="{{ url_for('static', filename='images/control.png') }}" class="d-block w-100" alt="...">
@@ -123,8 +106,6 @@
          </a>
       </div>
    </div>
-
-   <!-- 图表 -->
    <div id="chart" class="container-fluid">
       <div class="row" style="height: 300px;">
          <div id="sheet" class="col-md-4 col-lg-4" style="height: 300px;"></div>
@@ -135,20 +116,12 @@
    <div class="beian container-fluid">
       <a style="text-align: center;" href="http://www.beian.miit.gov.cn/">渝ICP备20002131号</a>
    </div>
-
-
-   <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
-   <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
 
    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-   <!--加载echarts-->
    <script src="{{ url_for('static', filename='js/echarts.min.js') }}"></script>
-    <!--加载画图脚本-->
    <script src="{{ url_for('static', filename='js/draw.js') }}"></script>
-
-   <!-- 画图 -->
    <script>
       $(document).ready(function(){
             $("a[id^='login']").attr("href", "http://" + window.location.host + "/login/");

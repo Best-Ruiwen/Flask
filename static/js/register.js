@@ -8,33 +8,25 @@ $(document).ready(function(){
         var unencrypted_password = $("#psd").val();
         var unencrypted_email = $("#email").val();
         var verify_code = $("#verify_code").val();
-
-        // 正则验证部分
         var reg = new RegExp((/^[a-zA-Z]([-_a-zA-Z0-9]{5,20})$/))
         if(!reg.test(unencrypted_username)) {
             alert("用户名格式错误！");
             return
         }
-
-        // 验证密码是否合格
         if (sub_lv < 2){
             alert("密码过于简单！")
             return
         }
-
-        // 验证两次输入的密码是否一致
         var re_password = $("#re_psd").val();
         if(unencrypted_password != re_password){
             alert("两次输入的密码不一致！")
             return
         }
-
         var encrypted_username = encrypt.encrypt(unencrypted_username);
         var encrypted_password = encrypt.encrypt(unencrypted_password);
         var encrypted_email = encrypt.encrypt(unencrypted_email);
 
         var send = {"username":encrypted_username, "password":encrypted_password, "email":encrypted_email, "verify_code":verify_code};
-    //console.log(send)
         $.ajax({
             url:"/register/submit/",
             data:send,
@@ -79,7 +71,6 @@ $(document).ready(function(){
                     }, 1000)
                 }
         }
-
         var encrypted_email = encrypt.encrypt(unencrypted_email);
         var send = {"email":encrypted_email, "status":"register"}
         $.ajax({
@@ -120,7 +111,7 @@ $(document).ready(function(){
     function PasswordStrength(passwordID, strengthID) {
         this.init(strengthID);
         var _this = this;
-        document.getElementById(passwordID).onkeyup = function () {//onkeyup 事件,在键盘按键被松开时发生,进行判断
+        document.getElementById(passwordID).onkeyup = function () {
         _this.checkStrength(this.value);
         }
     };
@@ -131,17 +122,17 @@ $(document).ready(function(){
         this.oStrength = id.appendChild(div);
         this.oStrengthTxt = id.parentNode.appendChild(strong);
     };
-    PasswordStrength.prototype.checkStrength = function (val) { //验证密码强度的函数
-        var aLvTxt = ['', '不安全', '一般', '安全'];//定义提示消息的种类
-        var lv = 0; //初始化提示消息为空
-        if (val.match(/[a-z]/g)) { lv++;} //验证是否包含字母
-        if (val.match(/[0-9]/g)) { lv++; } // 验证是否包含数字
-        if (val.match(/(.[^a-z0-9])/g)) { lv++; } //验证是否包含字母，数字，字符
-        if (val.length < 6) { lv = 0; } //如果密码长度小于6位，提示消息为空
+    PasswordStrength.prototype.checkStrength = function (val) { 
+        var aLvTxt = ['', '不安全', '一般', '安全'];
+        var lv = 0; 
+        if (val.match(/[a-z]/g)) { lv++;} 
+        if (val.match(/[0-9]/g)) { lv++; } 
+        if (val.match(/(.[^a-z0-9])/g)) { lv++; } 
+        if (val.length < 6) { lv = 0; } 
         if (lv > 3) { lv = 3; } 
-        sub_lv=lv;  //sub_lv是全局变量用于记录密码强度等级
-        this.oStrength.className = 'strengthLv' + lv;  //改变强度等级的类名称
-        this.oStrengthTxt.innerHTML = aLvTxt[lv];   //将提示内容写入html文件
+        sub_lv=lv; 
+        this.oStrength.className = 'strengthLv' + lv;  
+        this.oStrengthTxt.innerHTML = aLvTxt[lv];  
     };
     new PasswordStrength('psd','pwdStrength');
 })

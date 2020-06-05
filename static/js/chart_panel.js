@@ -20,7 +20,6 @@ function changeURL(id){
 }
 
 $("#logout").click(function(){
-    console.log($("#username").val())
     $.ajax({
         url:'/logout/',
         data:{"username":$("#username").val()},

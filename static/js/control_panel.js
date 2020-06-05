@@ -101,7 +101,7 @@ function RectifyDeviceIP(){
         status = "6"
     }  
   
-    if(!reg_ip4.test(ip) && !isIpv6){  //既不是ipv6也不是ipv4
+    if(!reg_ip4.test(ip) && !isIpv6){ 
         alert("错误的ip地址格式！")
         return;
     }
@@ -143,7 +143,6 @@ function deleteDevice(){
 }
 
 $("#logout").click(function(){
-    console.log($("#username").val())
     $.ajax({
         url:'/logout/',
         data:{"username":$("#username").val()},

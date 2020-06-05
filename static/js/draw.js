@@ -4,20 +4,18 @@ function drawLineChart(data){
     for(var i=0;i<len;i++){
         temp.push([i, data[i]]);
     }
-
     echarts.init(document.getElementById('line')).setOption({
     tooltip: {},
     toolbox: {},
     xAxis: {},
     yAxis: {},
-    // title:{text:'温度变化趋势'},
     series: [{
             type: 'line',
             smooth: false,
             data: temp
     }]
     });
-}  //折线图
+} 
 
 function drawPieChart(pie){
 
@@ -56,10 +54,9 @@ function drawPieChart(pie){
             }
         }; 
     }
-
     chart = echarts.init(dom);
     chart.setOption(option, true); 
-}  //饼状图
+}  
 
          
 function drawTable(data, time){
@@ -79,11 +76,11 @@ function drawTable(data, time){
         table = table + "<tr>     <td><p>" +Y+M+D+h+m+s+ "</p></td>   <td><p>" +data[i] + "</p></td></tr>";
     }
     table = table + "</tbody></table>";
-    $("#sheet").html(table); // 绘制表格完成
+    $("#sheet").html(table); 
     var he = $("#sheet").height() + 50 + "px"
     $("#sheet").css("height",he)
-    $("#sheet").html(table); // 绘制表格完成
-}   //表格
+    $("#sheet").html(table); 
+}  
 
 function selectNode(node){
     for(var i=1;i<6;i++){
@@ -109,12 +106,9 @@ function selectNode(node){
 }
 
 function selectNode_mobile(node){
-    console.log($("#t_mobile1").children("label").text())
     for(var i=1;i<6;i++){
         if($("#"+"t_mobile"+String(i)).is(":checked")){
             $('#b2').text(node);
-            
-            // $("#b3").text($("#"+"t_mobile"+String(i)).text())
             $.ajax({
             url:'/'+ $("#username").text() +'/node/',
             data:{'node':node, "time":i},
@@ -133,9 +127,7 @@ function selectNode_mobile(node){
     }
     alert("请选择时间段!")
 }
-
 $("#logout").click(function(){
-    console.log($("#username").val())
     $.ajax({
         url:'/logout/',
         data:{"username":$("#username").val()},

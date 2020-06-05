@@ -185,8 +185,12 @@ def add_device(username):
         node = request.args.get("node")
         ip = request.args.get("ip")
         status = request.args.get("status")
-        # print(node)
-        datahandler.add_device(node, username, ip, status)
+        ret = datahandler.add_device(node, username, ip, status)
+        if ret == "添加成功":
+            dtime = time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
+            content = "您于{}添加了设备\'{}\'，该设备\ip地址为{}，如果不是您本人操作，请尽快登录瑞文云，并修改密码。".format(dtime, node, ip)
+            email = datahandler.getmail(username)
+            mail.notify(content, email)
         return json.dumps("success")
         # return json.dumps(datahandler.add_device(username, node))
     return json.dumps(-1)
@@ -215,15 +219,12 @@ def register_submit():
     email = rsa.decrypt(email).decode()
     verify_code = request.args.get("verify_code")
     print("收到的验证码:{}".format(verify_code))
-
     if cache._get(email) == verify_code:    # 验证通过，将数据写入数据库
         print("验证通过!")
         username = request.args.get("username")
         username = rsa.decrypt(username).decode()
-
         password = request.args.get("password")
         password = rsa.decrypt(password).decode()
-        
         if datahandler.register(username, password, email):  
             session[username] = username   # 如果注册成功，则自动登录
             filehandler.makedir(username)  # 创建文件夹
@@ -283,6 +284,10 @@ def rectify(username):
         ip = request.args.get("ip")
         status = request.args.get("status")
         if datahandler.rectify(node, ip, status):
+            dtime = time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
+            content = "您于{}将设备\'{}\'的ip地址变更为{}，如果不是您本人操作，请尽快登录瑞文云，并修改密码。".format(dtime, node, ip)
+            email = datahandler.getmail(username)
+            mail.notify(content, email)
             return json.dumps("修改成功！")
         else:
             return json.dumps("修改失败！")
