@@ -111,22 +111,25 @@ def pie_handler(data):
     return pie
 def add_device(table, username, ip, status):
     tables = get_table(username)
-    if table in tables:
-        return '您已经添加过该设备！'  
+    if tables:
+        if table in tables:
+            return '您已经添加过该设备！'  
     cx = sqlite3.connect('data.db')
     cu = cx.cursor()
     cu.execute("select devicename from deviceinfo")
     cu_ret = cu.fetchall()
     tables = []
-    for item in cu_ret:
-        tables.append(item[0])
+    if len(cu_ret):
+        for item in cu_ret:
+            tables.append(item[0])
     if table in tables:
         cu.close()
         cx.close()
         return '设备名已经存在！'
-    cu.execute("create table {}(time float not null,"
-               "data float, not null)".format(table))  # 创建表
-    cu.execute("insert into deviceinfo values(null,{}, {})".format(table, status))  # 设备信息表
+    cu.execute("create table {}(time float not null, data float not null)".format(table))  # 创建表
+    cx.commit()
+    cu.execute("insert into deviceinfo values(null,\'{}\', \'{}\', \'{}\')".format(table, ip, status))  # 设备信息表
+    cx.commit()
     cu.execute("select id from userinfo where username=\"{}\"".format(username))
     userID=cu.fetchall()[0][0]
     cu.execute("select id from deviceinfo where devicename=\"{}\"".format(table))
@@ -143,6 +146,7 @@ def delete_device(username, device):
     userID=cu.fetchall()[0][0]
     cu.execute("select id from deviceinfo where devicename=\"{}\"".format(device))
     deviceID=cu.fetchall()[0][0]
+    cu.execute("delete from deviceinfo where devicename=\"{}\"".format(device))
     cu.execute("delete from user_device where user_id={} and device_id={}".format(userID, deviceID))
     cu.execute("drop table {}".format(device))
     cx.commit()
