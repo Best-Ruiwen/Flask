@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>download </title>
+    <style type="text/css">
+        table { border-collapse:collapse; font:12px }
+        th { background: #f4f4f4; cursor: pointer }
+        th,td { padding:5px; border:black solid 1px; white-space:nowrap }
+        th.sorted.ascending:after { content: "  \2191" }
+        th.sorted.descending:after { content: " \2193" }
+        th.no-sort,th.no-sort:hover { background: #f4f4f4; cursor: not-allowed }
+    </style>
+    <script src="{{url_for('static', filename='js/jquery.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/jquery.tablesorter.min.js')}}"></script>
+</head>
+<body>
+    <div>
+        <h1> 请点击需要下载的文件 </h1>
+    </div>
+    <div class="tb1">
+        <table>
+            <thead>
+                <tr>
+                    <th>文件名称 </th>
+                    <th class="number">文件大小 Kb </th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for k,v in names.items() %}  
+                <tr>
+                    <td> <a href="/download/{{id}}/{{k}}/">{{k}} </a> </td>
+                    <td> {{v}} </td>
+                </tr>  
+            {% endfor %} 
+            </tbody>
+        </table>
+    </div>
+
+<script >
+    $(function() {
+        $('table').tablesorter().data('tablesort');
+        $('thead th.number').data('sortBy', function(th, td, sorter) {
+            return parseInt(td.text(), 10);
+        });
+        $('table.tb1').on('tablesort:start', function(event, tablesort) {
+            $('table.tb1 tbody').addClass("disabled");
+            $('.tb1 th.number').removeClass("sorted").text('Sorting..');
+        });
+        $('table.tb1').on('tablesort:complete', function(event, tablesort) {
+            $('table.tb1 tbody').removeClass("disabled");
+            $('.tb1 th.number').text('Number');
+        });    
+    });
+</script>
+
+</body>
+</html>
