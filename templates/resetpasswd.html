@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+   <meta charset="utf-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+   <title>重置</title>
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+   <link rel="shortcut icon" href=" {{ url_for('static', filename='images/title.ico') }}">
+</head>
+<body>
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-6">感谢您选择瑞文云</h1>
+        </div>
+    </div>
+    <div class="row">
+        <form class="col-xl-6 offset-xl-3 col-lg-6 offset-lg-3 col-md-8 offset-md-2", method="POST">
+            <div class="form-group row">
+                <label class="col-xl-2 col-lg-3 col-md-3 col-sm-2 col-form-label">邮箱</label>
+                <div class="col-xl-6 col-lg-5 col-md-6 col-sm-10">
+                  <input id="email" class="form-control" type="email" name="mail" placeholder="example@rivenclod.top">
+                </div>
+                <button id="sub_verify" class="btn btn-outline-success col-xl-4 col-lg-3 col-md-3 querybtn btn-block" type="button">获取验证码</button>
+            </div>            
+        </form>
+        <form class="col-xl-6 offset-xl-3 col-lg-6 offset-lg-3 col-md-8 offset-md-2" method="POST">
+            <div class="form-group row">
+                <label class="col-xl-2 col-lg-3 col-md-3 col-sm-2 col-form-label">密码</label>
+                <div class="col-xl-10 col-lg-8 col-md-9 col-sm-10">
+                  <input id="psd" type="password" class="form-control" name="password" placeholder="请输入密码">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-xl-2 col-lg-3 col-md-3 col-sm-2 col-form-label">确认密码</label>
+                <div class="col-xl-10 col-lg-8 col-md-9 col-sm-10">
+                  <input id="re_psd" type="password" class="form-control" name="password" placeholder="请输入密码">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-xl-2 col-lg-3 col-md-3 col-sm-2 col-form-label">验证码</label>
+                <div class="col-xl-3 col-lg-3 col-md-9 col-sm-10">
+                  <input id="verify_code" class="form-control" name="password">
+                </div>
+            </div>
+            <button id="reset" class="btn btn-outline-success my-2 my-sm-0 col-xl-6 offset-xl-2 col-lg-9 offset-lg-3 col-md-9 offset-md-3 querybtn btn-block" type="button">重置</button>
+        </form>
+    </div>  
+    <div hidden="hidden">
+        <textarea id="pubkey" rows="15" cols="65">
+            {{ public_key }}
+        </textarea>
+    </div>
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jsencrypt.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/reset.js') }}"></script>
+</body>
+</html>
