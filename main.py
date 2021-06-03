@@ -8,15 +8,14 @@ import os
 import time
 import json
 import socket
-import sys 
-sys.path.append('./module/')
+
 
 # 自写模块
-import datahandler
-import filehandler
-import rsa
-import mail
-from cache import Cache
+from module.database import datahandler
+from module.file import filehandler
+from module.file import mail
+from module.utils import rsa
+from module.utils.cache import Cache
 
 
 app = Flask(__name__)
@@ -74,10 +73,9 @@ def login_submit():
     password = request.args.get("password")
     password = rsa.decrypt(password).decode()
 
-    result_login = datahandler.login(username, password)  # 验证帐号和密码 返回值：0代表验证未通过
-                                                                               # 1代表用户名验证通过
-                                                                               # -1代表未注册的账号
-                                                                               # 其他代表返回了邮箱地址   
+    result_login = datahandler.login(username, password)    # 验证帐号和密码 返回值：# 1代表用户名验证通过
+                                                                                 # -1代表验证失败
+                                                                                 # 其他代表返回了邮箱地址
 
     if result_login == 1:
         session[username] = username
@@ -88,7 +86,7 @@ def login_submit():
         return json.dumps(-1)
 
     elif result_login == -1:  # 未注册的账号
-        return json.dumps(-2)  
+        return json.dumps(-1)
 
     else:  # 返回的是用户名
         session[result_login] = result_login
@@ -144,7 +142,6 @@ def node_select(username):
     return json.dumps(-1)
 
 
-
 # 控制面板
 @app.route('/user/<username>/control/')
 def control(username):
@@ -191,7 +188,7 @@ def add_device(username):
             content = "您于{}添加了设备\'{}\'，该设备\ip地址为{}，如果不是您本人操作，请尽快登录瑞文云，并修改密码。".format(dtime, node, ip)
             email = datahandler.getmail(username)
             mail.notify(content, email)
-        return json.dumps("success")
+            return json.dumps("success")
         # return json.dumps(datahandler.add_device(username, node))
     return json.dumps(-1)
 
@@ -219,7 +216,7 @@ def register_submit():
     email = rsa.decrypt(email).decode()
     verify_code = request.args.get("verify_code")
     print("收到的验证码:{}".format(verify_code))
-    if cache._get(email) == verify_code:    # 验证通过，将数据写入数据库
+    if cache.get(email) == verify_code:    # 验证通过，将数据写入数据库
         print("验证通过!")
         username = request.args.get("username")
         username = rsa.decrypt(username).decode()
@@ -240,9 +237,9 @@ def verify():
     email = request.args.get("email")
     email = rsa.decrypt(email).decode()
 
-    status = request.args.get("status")  #register，或者reset
+    status = request.args.get("status")      # register，或者reset
 
-    if datahandler.isregister(email) and status == 'register': #邮箱已经注册，但用户在注册该邮箱
+    if datahandler.isregister(email) and status == 'register':      # 邮箱已经注册，但用户在注册该邮箱
         return json.dumps(-1)
 
     elif (not datahandler.isregister(email)) and status == 'reset':  # 邮箱未注册，但用户在重置密码
@@ -251,7 +248,7 @@ def verify():
     else:
         verify_code = random.randint(100000, 999999)
         print("生成的验证码:{}".format(verify_code))
-        cache._set(email, verify_code)
+        cache.set(email, verify_code)
         mail.sendmail(email, verify_code)
     return json.dumps(0)
 
@@ -268,7 +265,7 @@ def reset_verify():
     email = request.args.get("email")
     email = rsa.decrypt(email).decode()
     verify_code = request.args.get("verify_code")
-    if cache._get(email) == verify_code:    # 验证通过，将数据写入数据库
+    if cache.get(email) == verify_code:    # 验证通过，将数据写入数据库
         password = request.args.get("password")
         password = rsa.decrypt(password).decode()
 
@@ -284,7 +281,7 @@ def rectify(username):
         ip = request.args.get("ip")
         status = request.args.get("status")
         if datahandler.rectify(node, ip, status):
-            dtime = time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
+            dtime = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
             content = "您于{}将设备\'{}\'的ip地址变更为{}，如果不是您本人操作，请尽快登录瑞文云，并修改密码。".format(dtime, node, ip)
             email = datahandler.getmail(username)
             mail.notify(content, email)

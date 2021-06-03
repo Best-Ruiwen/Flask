@@ -21,6 +21,7 @@
   </style>
 </head>
 <body>
+    <!-- 导航条 -->
     <div class="container-fluid" style="height: 80px;">
         <nav class="navbar navbar-dark navbar-expand-lg fixed-top bg-dark shadow">
             <a class="navbar-brand" id="homepage" href="#">
@@ -60,9 +61,13 @@
             </div>
          </nav>
     </div>
+
+    <!-- username -->
     <div hidden="hidden" id="username">{{id}}</div>
+
     <div hidden="hidden" id="tables">{{tables|tojson}}</div>
-    <div class="container-fluid">
+
+    <!-- 侧边导航条 -->
     <div class="row">
         <nav class="col-sm-1 col-md-2 col-lg-2 d-none d-sm-block bg-light sidebar" style="position: fixed;">
             <div class="sidebar-sticky">
@@ -95,6 +100,7 @@
             </div>
         </nav>
     </div>
+    
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
         <div class="row">
             <div class="row col-lg-5">
