@@ -1,8 +1,5 @@
 <<<<<<< HEAD
 *.pyc
-*.bin
-*.pem
-/download
 te.py
 /.idea
 =======
