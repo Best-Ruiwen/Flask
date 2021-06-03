@@ -1,9 +1,4 @@
-<<<<<<< HEAD
+
 *.pyc
 te.py
 /.idea
-=======
-*.bin
-*.pem
-/download
->>>>>>> d3298eb350f3f15bd30e8df8b0a619b236b18532
