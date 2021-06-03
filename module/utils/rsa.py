@@ -26,6 +26,7 @@ def decrypt(en_data, secret_code="penghaidong"):
     data = cipher_rsa.decrypt(data, None)   # 解密
     return data
 
+
 # 界面节点上传的数据
 def decrypt_upload_data(en_data, secret_code="penghaidong"):
     data = base64.b64decode(en_data)
@@ -34,12 +35,14 @@ def decrypt_upload_data(en_data, secret_code="penghaidong"):
     data = cipher_rsa.decrypt(data, None)   # 解密
     return data
 
+
 # 加密
 def encrypt(data):
     pub = RSA.import_key(open("public_key.pem").read())
     cipher_rsa = PKCS1_v1_5.new(pub)
     data = base64.b64encode(cipher_rsa.encrypt(data))
     return data
+
 
 def get_public_key():
     return RSA.import_key(open("public_key.pem").read()).export_key().decode().replace("\n", "")

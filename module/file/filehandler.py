@@ -1,5 +1,5 @@
 import os
-import datahandler
+from module.database import datahandler
 
 
 # 将数据库中的表写入CSV文件

@@ -10,6 +10,8 @@
    <link rel="shortcut icon" href=" {{ url_for('static', filename='images/title.ico') }}">
 </head>
 <body>
+
+    <!-- 顶部导航 -->
     <div class="container-fluid" style="height: 76px;">
         <nav class="navbar navbar-dark navbar-expand-lg fixed-top bg-dark shadow">
             <a class="navbar-brand" id='homepage' href="#">
@@ -51,6 +53,8 @@
          </nav>
     </div>
     <div hidden="hidden" id="username">{{id}}</div>
+
+    <!-- 侧边导航，当设备时sm类时，会被屏蔽 -->
     <div class="container-fluid">
         <div class="row">
             <nav class="col-md-2 d-none d-sm-block d-md-block bg-light sidebar" style="position: fixed;">
@@ -161,59 +165,61 @@
             <div  id="sheet"> </div>
         </main>
     </div>
+
+    <!-- 移动端的底部导航， 仅在sm型号的设备才显示 -->
     <div class="footer container d-block d-sm-none " >
         <div class="row">
-                <div class="btn-group dropup col-6" style="padding-top:10px;">
-                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" id="b2" aria-haspopup="true">
-                        节点选择
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="b2">
-                    {% if nodes %}
-                        {% for node in nodes %}
-                        <button class="dropdown-item" type="button" onclick="selectNode_mobile('{{node}}')">{{node}}</button>
-                        {% endfor %}
-                    {% else %}
-                        <button class="dropdown-item" type="button">没有节点</button>
-                    {% endif %}
-                    </div>
+            <div class="btn-group dropup col-6" style="padding-top:10px;">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" id="b2" aria-haspopup="true">
+                    节点选择
+                </button>
+                <div class="dropdown-menu" aria-labelledby="b2">
+                {% if nodes %}
+                    {% for node in nodes %}
+                    <button class="dropdown-item" type="button" onclick="selectNode_mobile('{{node}}')">{{node}}</button>
+                    {% endfor %}
+                {% else %}
+                    <button class="dropdown-item" type="button">没有节点</button>
+                {% endif %}
                 </div>
-                <div class="btn-group dropup col-6" style="padding-top:10px;">
-                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" id="b3" aria-haspopup="true">
-                        时间选择
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="b3">
-                        <div class="row col-lg-12">
-                            <div class="form-check col-lg-12 col-md-12 col-sm-8">
-                                <input class="form-check-input" name="device" type="radio" value="" id="t_mobile1">
-                                <label class="form-check-label" for="t_mobile1">最近1小时</label>
-                            </div>
-                        </div>                       
-                        <div class="row col-lg-12">
-                            <div class="form-check col-lg-12 col-md-12 col-sm-8">
-                                <input class="form-check-input" name="device" type="radio" value="" id="t_mobile2">
-                                <label class="form-check-label" for="t_mobile2">最近5小时</label>
-                            </div>
+            </div>
+            <div class="btn-group dropup col-6" style="padding-top:10px;">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" id="b3" aria-haspopup="true">
+                    时间选择
+                </button>
+                <div class="dropdown-menu" aria-labelledby="b3">
+                    <div class="row col-lg-12">
+                        <div class="form-check col-lg-12 col-md-12 col-sm-8">
+                            <input class="form-check-input" name="device" type="radio" value="" id="t_mobile1">
+                            <label class="form-check-label" for="t_mobile1">最近1小时</label>
                         </div>
-                        <div class="row col-lg-12">
-                            <div class="form-check col-lg-12 col-md-12 col-sm-8">
-                                <input class="form-check-input" name="device" type="radio" value="" id="t_mobile3">
-                                <label class="form-check-label" for="t_mobile3">最近1天</label>
-                            </div>
+                    </div>                       
+                    <div class="row col-lg-12">
+                        <div class="form-check col-lg-12 col-md-12 col-sm-8">
+                            <input class="form-check-input" name="device" type="radio" value="" id="t_mobile2">
+                            <label class="form-check-label" for="t_mobile2">最近5小时</label>
                         </div>
-                        <div class="row col-lg-12">
-                            <div class="form-check col-lg-12 col-md-12 col-sm-8">
-                                <input class="form-check-input" name="device" type="radio" value="" id="t_mobile4">
-                                <label class="form-check-label" for="t_mobile4">最近5天</label>
-                            </div>
-                        </div>
-                        <div class="row col-lg-12">
-                            <div class="form-check col-lg-12 col-md-8 col-sm-8">
-                                <input class="form-check-input" name="device" type="radio" value="" id="t_mobile5">
-                                <label class="form-check-label" for="t_mobile5">最近7天</label>
-                            </div>
-                        </div>                     
                     </div>
+                    <div class="row col-lg-12">
+                        <div class="form-check col-lg-12 col-md-12 col-sm-8">
+                            <input class="form-check-input" name="device" type="radio" value="" id="t_mobile3">
+                            <label class="form-check-label" for="t_mobile3">最近1天</label>
+                        </div>
+                    </div>
+                    <div class="row col-lg-12">
+                        <div class="form-check col-lg-12 col-md-12 col-sm-8">
+                            <input class="form-check-input" name="device" type="radio" value="" id="t_mobile4">
+                            <label class="form-check-label" for="t_mobile4">最近5天</label>
+                        </div>
+                    </div>
+                    <div class="row col-lg-12">
+                        <div class="form-check col-lg-12 col-md-8 col-sm-8">
+                            <input class="form-check-input" name="device" type="radio" value="" id="t_mobile5">
+                            <label class="form-check-label" for="t_mobile5">最近7天</label>
+                        </div>
+                    </div>                     
                 </div>
+            </div>
         </div>
     </div>
    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
@@ -222,6 +228,4 @@
    <script src="{{ url_for('static', filename='js/echarts.min.js') }}"></script>
    <script src="{{ url_for('static', filename='js/draw.js') }}"></script>
    <script src="{{ url_for('static', filename='js/chart_panel.js') }}"></script>
-   <script>
-   </script>
 </body>
