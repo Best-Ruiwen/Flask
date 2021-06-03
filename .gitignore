@@ -4,6 +4,7 @@
 *.pem
 /download
 te.py
+/.idea
 =======
 *.bin
 *.pem
