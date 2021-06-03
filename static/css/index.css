@@ -1,0 +1,21 @@
+.navbar-dark .navbar-brand{
+    color: rgb(255, 255, 255);
+    font-size: 2em;
+ }
+ .navbar-dark .navbar-nav .nav-link.active{
+    color: rgb(255, 255, 255);
+ }
+ .navbar .navbar-nav .nav-link{
+    color: rgb(255, 255, 255);
+ }
+
+ .navbar .navbar-nav .nav-link.disabled{
+    color: rgb(255, 255, 255);
+ }
+
+ .row .tt{
+    height: 20px;
+ }
+   table>p{
+    margin-bottom: 0px;
+ }
