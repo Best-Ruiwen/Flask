@@ -68,13 +68,13 @@
                         </li>
                         <li class="nav-item">
                             <a id='2' class="nav-link" href="#pie" onclick="setActive(2)">
-                            <span data-feather="file"></span>
+                            <!-- <span data-feather="file"></span> -->
                             构成
                             </a>
                         </li>
                         <li class="nav-item">
                             <a id="3" class="nav-link" href="#sheet" onclick="setActive(3)">
-                            <span data-feather="shopping-cart"></span>
+                            <!-- <span data-feather="shopping-cart"></span> -->
                             数据表格
                             </a>
                         </li>
@@ -83,34 +83,17 @@
                         <li class="nav-item"><p>   </p> </li>
                         <li class="nav-item"><p>   </p> </li>
                         <li class="nav-item"><p>   </p> </li>
-                        <li class="nav-item">
-                            <div class="dropdown" >
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    节点选择
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                    {% if nodes %}
-                                        {% for node in nodes %}
-                                            <button class="dropdown-item" type="button" onclick="selectNode('{{node}}')">{{node}}</button>
-                                        {% endfor %}
-                                    {% else %}
-                                            <button class="dropdown-item" type="button">没有数据</button>
-                                    {% endif %}
-                                </div>
-                            </div>
-                        </li>
                         <li class="nav-item"><p>   </p> </li>
-                        <li class="nav-item">
-                            <p> 当前节点:<span id='nodeName' style="color: blue;">无</span></p>
-                        </li>
                         <li class="nav-item"><p>   </p> </li>
+
                         <li class="nav-item">
                             <div class="row col-lg-12">
                                 <div class="form-check col-lg-12 col-md-12 col-sm-8">
                                     <input class="form-check-input" name="device" type="radio" value="" id="t1">
                                     <label class="form-check-label" for="t1">最近1小时</label>
-                                </div>
-                            </div>                       
+                                </div> 
+                            </div>  
+
                             <div class="row col-lg-12">
                                 <div class="form-check col-lg-12 col-md-12 col-sm-8">
                                     <input class="form-check-input" name="device" type="radio" value="" id="t2">
@@ -136,6 +119,31 @@
                                 </div>
                             </div>
                         </li>
+
+                        <!-- <li class="nav-item"><p>   </p> </li> -->
+
+                        <li class="nav-item">
+                            <div class="dropdown" >
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    设备选择
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                    {% if nodes %}
+                                        {% for node in nodes %}
+                                            <button class="dropdown-item" type="button" onclick="selectNode('{{node}}')">{{node}}</button>
+                                        {% endfor %}
+                                    {% else %}
+                                            <button class="dropdown-item" type="button">没有数据</button>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="nav-item">
+                            <p> 当前设备:<span id='nodeName' style="color: blue;">无</span></p>
+                        </li>
+                        <li class="nav-item"><p>   </p> </li>
+
                         <li class="nav-item"><p>   </p> </li>
                         <li class="nav-item"><p>   </p> </li>
                         <li class="nav-item"><p>   </p> </li>
@@ -171,17 +179,17 @@
         <div class="row">
             <div class="btn-group dropup col-6" style="padding-top:10px;">
                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" id="b2" aria-haspopup="true">
-                    节点选择
+                    设备选择
                 </button>
                 <div class="dropdown-menu" aria-labelledby="b2">
-                {% if nodes %}
-                    {% for node in nodes %}
-                    <button class="dropdown-item" type="button" onclick="selectNode_mobile('{{node}}')">{{node}}</button>
-                    {% endfor %}
-                {% else %}
-                    <button class="dropdown-item" type="button">没有节点</button>
-                {% endif %}
-                </div>
+                    {% if nodes %}
+                        {% for node in nodes %}
+                        <button class="dropdown-item" type="button" onclick="selectNode_mobile('{{node}}')">{{node}}</button>
+                        {% endfor %}
+                    {% else %}
+                        <button class="dropdown-item" type="button">没有设备</button>
+                    {% endif %}
+                    </div>
             </div>
             <div class="btn-group dropup col-6" style="padding-top:10px;">
                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" id="b3" aria-haspopup="true">

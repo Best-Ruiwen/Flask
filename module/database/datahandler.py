@@ -217,6 +217,34 @@ def getmail(username):
     return email
 
 
+def create_database():
+    time = [1578489630.80251, 1578489714.44998, 1578489722.58172, 1578489730.0516, 1578489737.00513]
+    data = [10.4574078430068, 17.0097587311147, 11.5051689617662, 20.5521855823856, 18.261248777006]
+    with Connect() as cu:
+        # 创建用户信息表
+        cu.execute("create table userinfo ( \
+            id integer primary key autoincrement, \
+            username char(10) not null, \
+            password char(20) not null, \
+            email char(50) not null);")
+        # 创建设备信息表
+        cu.execute("create table deviceinfo ( \
+            id integer primary key autoincrement, \
+            devicename char(20) not null,\
+            ip char(128) not null, \
+            status char not null);")
+        # 创建映射表
+        cu.execute("create table user_device ( \
+            user_id int not null, \
+            device_id not null);")
+        cu.execute("create table node_1034 ( \
+            time float not null, \
+            data float not null \
+            );")
+        for t, d in zip(time, data):
+            cu.execute("insert into node_1034(time, data) values({}, {})".format(t, d))
+
+
 if __name__ == '__main__':
     print('Filename:datahandler.py')
     print('Function:Read data from data base or write data to data base')

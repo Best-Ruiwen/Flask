@@ -2,3 +2,5 @@
 *.pyc
 te.py
 /.idea
+*.pem
+*.bin

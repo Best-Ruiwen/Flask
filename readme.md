@@ -18,7 +18,7 @@ Usage:
         5. Run 'uwsgi uwsgi.ini' in terminal.
         6. Open "http://127.0.0.1/" in browser.
     C. Test account:2016212707
-            password:riven
+            password:456
 
 Attention:
     1. Make sure that you have enable IPv6 when run this project on a Ubuntu machine.

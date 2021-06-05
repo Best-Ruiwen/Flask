@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 # 系统模块
-from flask import Flask, render_template, url_for, redirect 
+from flask import Flask, render_template, url_for
 from flask import request, session, send_from_directory
 import random
 import os
@@ -74,10 +74,11 @@ def login_submit():
     password = rsa.decrypt(password).decode()
 
     result_login = datahandler.login(username, password)    # 验证帐号和密码 返回值：# 1代表用户名验证通过
-                                                                                 # -1代表验证失败
+                                                                                 # -1代表未注册的账号
+                                                                                 # 0代表验证失败
                                                                                  # 其他代表返回了邮箱地址
 
-    if result_login == 1:
+    if result_login == 1:   # 验证成功
         session[username] = username
         return json.dumps(url_for('success', username=username))
         # return json.dumps("http://localhost/user/{}/".format(username))
@@ -325,4 +326,13 @@ def upload(device):
 
 
 if __name__ == '__main__':
+    file = os.listdir()
+    if not ("private_key.bin" in file):
+        rsa.create_rsa_key(secret_code='rivenriven')
+    if not ("data.db" in file):
+        datahandler.create_database()
+    if not ("download" in file):
+        os.mkdir("download")
+    if not ("log" in file):
+        os.mkdir("log")
     app.run(port=80, host='127.0.0.1', debug=True)

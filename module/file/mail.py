@@ -2,6 +2,8 @@ import smtplib
 import email
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+
+
 def sendmail(addr, code):
     EMAIL_FROM = ''
     EMAIL_HOST_PASSWORD = ''
@@ -26,6 +28,8 @@ def sendmail(addr, code):
         return True
     except:
         return False
+
+
 def notify(content, addr):
     EMAIL_FROM = ''
     EMAIL_HOST_PASSWORD = ''

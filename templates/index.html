@@ -60,6 +60,8 @@
          </div>
       </nav>
    </div>
+
+   <!-- 巨幕 -->
    <div class="container-fluid" style="z-index: 1;">
       <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="left: auto;right: 0;">
          <ol class="carousel-indicators">
@@ -106,16 +108,58 @@
          </a>
       </div>
    </div>
+
+
+   <!-- 图表容器 -->
    <div id="chart" class="container-fluid">
       <div class="row" style="height: 300px;">
          <div id="sheet" class="col-md-4 col-lg-4" style="height: 300px;"></div>
          <div id="line" class="col-md-4 col-lg-4" style="height: 300px;"></div>
          <div id="pie" class="col-md-4 col-lg-4" style="height: 300px;"></div>
       </div>
+
+      <div class="row" style="height: 20px;"></div>
+
+      <div class="row" style="height: 100px;">
+         <div class="col-md-2 col-lg-2 offset-md-1 offset-lg-1" style="text-align: center;"> <p> 
+            数据表格直观的展示了所有的数据，让你可以直接查看所有数据的值。
+            </p> </div>
+         <div class="col-md-2 col-lg-2 offset-md-2 offset-lg-2" style="text-align: center; "> <p> 
+            折线图展示了一段时间内的数据走势，你可以通过折线图大致推测接下来数据的走势。 
+            </p> </div>
+         <div class="col-md-2 col-lg-2 offset-md-2 offset-lg-2" style="text-align: center;"> <p> 
+            饼状图展示了数据的大致构成，通过饼状图，你可以看出最近的数据分布情况。 
+            </p> </div>
+      </div>
    </div>
-   <div class="beian container-fluid">
+
+   <!-- <div id="chart" class="container-fluid">
+      <div class="row" style="height: 300px;">
+         <div id="sheet" class="col-md-4 col-lg-4" style="height: 300px;"></div>
+         <div class="col-md-6 col-lg-6">
+            <p> 这是一些介绍 </p>
+         </div>
+      </div>
+
+      <div class="row" style="height: 300px;">
+         <div id="line" class="col-md-4 col-lg-4" style="height: 300px;"></div>
+         <div class="col-md-6 col-lg-6">
+            <p> 这是一些介绍 </p>
+         </div>
+      </div>
+
+      <div class="row" style="height: 300px;">
+         <div id="pie" class="col-md-4 col-lg-4" style="height: 300px;"></div>
+         <div class="col-md-6 col-lg-6">
+            <p> 这是一些介绍 </p>
+         </div>
+      </div>
+
+   </div> -->
+
+   <!-- <div class="beian container-fluid">
       <a style="text-align: center;" href="http://www.beian.miit.gov.cn/">渝ICP备20002131号</a>
-   </div>
+   </div> -->
    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
 
