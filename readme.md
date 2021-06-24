@@ -1,4 +1,4 @@
-本平台是一个基于python flask 的物联网应用平台。设备接入时，使用了华为物联网设备接入服务，详情见 https://www.huaweicloud.com/product/iothub.html 
+本项目是一个基于python flask 的物联网应用平台。设备接入时，使用了华为物联网设备接入服务，详情见 https://www.huaweicloud.com/product/iothub.html 
 <br>需要的 python packages:
 <br>&emsp;&emsp;1. flask;
 <br>&emsp;&emsp;2. pycryptodome;
