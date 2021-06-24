@@ -1,6 +1,9 @@
 
 *.pyc
 te.py
+ceshi.py
 /.idea
 *.pem
 *.bin
+test.html
+data.db

@@ -15,27 +15,37 @@
     <script src="{{url_for('static', filename='js/jquery.tablesorter.min.js')}}"></script>
 </head>
 <body>
-    <div>
-        <h1> 请点击需要下载的文件 </h1>
+    <div style="margin: 0 auto;">
+        {% if nammes %}
+        <div>
+            <h1> 请点击需要下载的文件 </h1>
+        </div>
+        <div class="tb1">
+            <table>
+                <thead>
+                    <tr>
+                        <th>文件名称 </th>
+                        <th class="number">文件大小 Kb </th>
+                    </tr>
+                </thead>
+                <tbody>               
+                {% for k,v in names.items() %}
+                    <tr>
+                        <td> <a href="/download/{{id}}/{{k}}/">{{k}} </a> </td>
+                        <td> {{v}} </td>
+                    </tr>
+                {% endfor %}            
+                </tbody>
+            </table>
+        </div>
+
+        {% else %}
+        <div>
+            <h1> 没有数据 </h1>
+        </div>
+        {% endif %}
     </div>
-    <div class="tb1">
-        <table>
-            <thead>
-                <tr>
-                    <th>文件名称 </th>
-                    <th class="number">文件大小 Kb </th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for k,v in names.items() %}  
-                <tr>
-                    <td> <a href="/download/{{id}}/{{k}}/">{{k}} </a> </td>
-                    <td> {{v}} </td>
-                </tr>  
-            {% endfor %} 
-            </tbody>
-        </table>
-    </div>
+
 
 <script >
     $(function() {

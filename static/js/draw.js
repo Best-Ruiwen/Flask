@@ -82,6 +82,7 @@ function drawTable(data, time){
     $("#sheet").html(table); 
 }  
 
+// 选择节点
 function selectNode(node){
     for(var i=1;i<6;i++){
         if($("#"+"t"+String(i)).is(":checked")){
@@ -127,13 +128,4 @@ function selectNode_mobile(node){
     }
     alert("请选择时间段!")
 }
-$("#logout").click(function(){
-    $.ajax({
-        url:'/logout/',
-        data:{"username":$("#username").val()},
-        dataType:"json",
-        success:function(data){
-            window.location.href=data;
-        }
-    });
-});
+

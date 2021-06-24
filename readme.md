@@ -1,27 +1,28 @@
-The content of this project is the IoT data management platform, and it is based on Flask framework.
-Required additional python packages:
-    1. flask;
-    2. pycryptodome;
-    3. redis.
-Required other software:
-    1. nginx;
-    2. redis server.
+本平台是一个基于python flask 的物联网应用平台。设备接入时，使用了华为物联网设备接入服务，详情见 https://www.huaweicloud.com/product/iothub.html 
+<br>需要的 python packages:
+<br>&emsp;&emsp;1. flask;
+<br>&emsp;&emsp;2. pycryptodome;
+<br>&emsp;&emsp;3. redis;
+<br>&emsp;&emsp;4. uwsgi.
+<br>需要的服务器软件:
+    <br>&emsp;&emsp;1. nginx;
+    <br>&emsp;&emsp;2. redis server.
 
-Usage:
+用法:
 
-    A. On Windows machine:python main.py and open "http://127.0.0.1/" in browser
-    B. On Linux machine(Ubuntu 16.04):
-        1. Run 'sudo chmod 777 configure.sh' in terminal.
-        2. Move the file under the folder 'keys' to the root of the projects
-        3. Run './configure.sh' in terminal.
-        4. Run 'nginx' in terminal.
-        5. Run 'uwsgi uwsgi.ini' in terminal.
-        6. Open "http://127.0.0.1/" in browser.
-    C. Test account:2016212707
-            password:456
+    A. 在windows下:python main.py，然后在浏览器中打开 "http://127.0.0.1/"
+    B. 在Ubuntu 16.04:
+        1. 在终端中运行 'sudo chmod 777 configure.sh'.
+        2. 在终端中运行 './configure.sh' in terminal.
+        3. 启动 nginx服务器.
+        4. 在终端中运行 'uwsgi uwsgi.ini'.
+        5. 在浏览器中打开 "http://127.0.0.1/".
 
-Attention:
-    1. Make sure that you have enable IPv6 when run this project on a Ubuntu machine.
-    2. No data for the last 7 days in the database for testing. 
-    3. You can register new device if you have a machine which can upload data by http protocol.
-    4. You can write data directly to database for test.
+注意:
+<br>&emsp;&emsp;1. 在ubuntu环境中使用时，可使用IPv6。
+<br>&emsp;&emsp;2. 数据库中没有数据。
+<br>&emsp;&emsp;3. 如果想尝试一下，可以直接往数据库中写入网关数据和账号数据。但由于使用了华为平台，只能在本地简单的运行，看不出效果。
+<br>&emsp;&emsp;4. 如果你想将此项目用于实际环境，请注册华为云账号，然后开通华为IOT接入服务，并根据华为的教程创建产品等。然后将密钥等信息填入`moudle.apig_sdk.base.py`
+中相关的位置。
+<br>&emsp;&emsp;5. 如果你想实现账号注册功能，还需要搭建smtp服务器以及一个公网IP，并改动`module.file.mail.py`中的相关信息。 
+

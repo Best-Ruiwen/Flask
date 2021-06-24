@@ -5,9 +5,9 @@ from email.mime.multipart import MIMEMultipart
 
 
 def sendmail(addr, code):
-    EMAIL_FROM = ''
-    EMAIL_HOST_PASSWORD = ''
-    EMAIL_HOST, EMAIL_PORT = '', 80
+    EMAIL_FROM = 'YOUR_DOMAIN'
+    EMAIL_HOST_PASSWORD = 'YOUR_PASSWD'
+    EMAIL_HOST, EMAIL_PORT = 'YOUR_HOST', 80
     replyto = EMAIL_FROM
     content = '您的验证码是：{}'.format(str(code)) + '\n' + '10分钟内有效'
     msg = MIMEMultipart('alternative')
