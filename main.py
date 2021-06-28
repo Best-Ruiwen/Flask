@@ -367,7 +367,7 @@ def get_devices_by_gateways(username, gateway):
 if __name__ == '__main__':
     file = os.listdir()
     if not ("private_key.bin" in file):
-        rsa.create_rsa_key(secret_code='rivenriven')
+        rsa.create_rsa_key(secret_code='hahaha')
     if not ("data.db" in file):
         dh.create_database()
     if not ("download" in file):
